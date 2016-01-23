@@ -5,6 +5,7 @@ import(
   "io/ioutil"
   "github.com/libgit2/git2go"
   "errors"
+  "strings"
 )
 
 func (p * Page) Save() error {
@@ -74,4 +75,11 @@ func GetHistory(title string) (*History, error) {
   }
   cdArray = append(cdArray, firstCommitDiff)
   return &History{Title: title, CDiffs: cdArray}, nil
+}
+
+func GetFileAndRawId(path string, apiName string) (string, string){
+  index := strings.LastIndex(path, "/")
+  filename := path[len(apiName):index]
+  rawId := path[index+1:]
+  return filename, rawId
 }

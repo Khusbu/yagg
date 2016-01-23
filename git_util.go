@@ -2,18 +2,12 @@ package main
 
 import (
   "io/ioutil"
-  "github.com/libgit2/git2go"
   "strings"
+  "fmt"
+  "github.com/libgit2/git2go"
 )
 
-// type FirstDiff struct{
-//   CommitId *git.Oid
-//   DiffString string
-//   CommitedOn string
-// }
-
 type CommitDiff struct{
-  // OldCommit *git.Oid
   CommitId *git.Oid
   DiffString string
   CommitedOn string
@@ -102,36 +96,31 @@ func walk() (*git.RevWalk, error){
   return repo_walk, nil
 }
 
-// func FindLastCommit(filename string) (*git.Oid, error) {
-//   err := walk(); if err != nil {
-//     return nil, err
-//   }
-//   oid := new(git.Oid)
-//   for{
-//     err = repo_walk.Next(oid); if err != nil{
-//       return nil, err
-//     }
-//     commit,err := repo.LookupCommit(oid); if err != nil{
-//       return nil, err
-//     }
-//     if(commit.Message() == filename){
-//       return commit.Id(), nil
-//     }
-//   }
-// }
-//
-// func FindContentByCommitId(commitId *git.Oid) ([]byte,error){
-//   commit, err := repo.LookupCommit(commitId); if err != nil {
-//     return nil, err
-//   }
-//   tree, err := commit.Tree(); if err != nil {
-//         return nil, err
-//   }
-//   blob, err := repo.LookupBlob(tree.EntryByName(commit.Message()).Id); if err != nil {
-//         return nil, err
-//   }
-//   return blob.Contents(), nil
-// }
+func GetData(rawId string) ([]byte, error){
+  commit_id, err := git.NewOid(rawId); if err != nil {
+      return nil, err
+  }
+  data, err := findContentByCommitId(commit_id); if err != nil {
+      return nil, err
+  }
+  return data, nil
+}
+
+func findContentByCommitId(commitId *git.Oid) ([]byte,error){
+  commit, err := repo.LookupCommit(commitId); if err != nil {
+    fmt.Println("LookupCommit error")
+    return nil, err
+  }
+  tree, err := commit.Tree(); if err != nil {
+    fmt.Println("Tree error")
+    return nil, err
+  }
+  blob, err := repo.LookupBlob(tree.EntryByName(commit.Message()).Id); if err != nil {
+    fmt.Println("LookupBlob error")
+    return nil, err
+  }
+  return blob.Contents(), nil
+}
 
 func FindCommitsInFile(filename string) ([]*git.Commit,error) {
   repo_walk, err := walk(); if err != nil {
@@ -191,7 +180,4 @@ func GetDiffInFile(curr,old *git.Commit,filename string) (string,error){
     }
   }
   return "",nil
-}
-func GetFirstDiffInFile(curr *git.Commit,filename string) (string,error){
-  return GetDiffInFile(curr,curr.Parent(0),filename)
 }

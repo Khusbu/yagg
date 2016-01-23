@@ -7,16 +7,22 @@ import (
   "io/ioutil"
 )
 
+func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
+    t, err := template.ParseFiles(tmpl)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+    err = t.Execute(w, data)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+}
+
 func NewHandler(w http.ResponseWriter, r *http.Request) {
   file := path.Join("view", "new.html")
-  t, err := template.ParseFiles(file); if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
-    return
-  }
-  err = t.Execute(w, nil); if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
-    return
-  }
+  renderTemplate(w, file, nil)
 }
 
 func CreateHandler(w http.ResponseWriter, r *http.Request) {
@@ -33,35 +39,21 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 func ShowHandler(w http.ResponseWriter, r *http.Request) {
   title := r.URL.Path[len("/show/"):]
   file := path.Join("view", "show.html")
-  t, err := template.ParseFiles(file); if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
-    return
-  }
   payload, err := GetPayload(title); if err != nil {
     http.Error(w, err.Error(), http.StatusNotFound)
     return
   }
-  err = t.Execute(w, payload); if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
-    return
-  }
+  renderTemplate(w, file, payload)
 }
 
 func EditHandler(w http.ResponseWriter, r *http.Request) {
   title := r.URL.Path[len("/edit/"):]
   file := path.Join("view", "edit.html")
-  t, err := template.ParseFiles(file); if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
-    return
-  }
   payload, err := GetPayload(title); if err != nil {
     http.Error(w, err.Error(), http.StatusNotFound)
     return
   }
-  err = t.Execute(w, payload); if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
-    return
-  }
+  renderTemplate(w, file, payload)
 }
 
 func DownloadHandler(w http.ResponseWriter, r *http.Request) {
@@ -85,26 +77,20 @@ func RawHandler(w http.ResponseWriter, r *http.Request) {
     http.Error(w, err.Error(), http.StatusNotFound)
     return
   }
-  w.Write(data)
+  _, err = w.Write(data); if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
   file := path.Join("view", "index.html")
-  t, err := template.ParseFiles(file)
-  if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
-    return
-  }
   file_list, err := GetFileList(*repoPath); if err != nil {
     http.Error(w, err.Error(), http.StatusInternalServerError)
     return
   }
   f := &Files{List: file_list};
-
-  err = t.Execute(w, f); if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
-    return
-  }
+  renderTemplate(w, file, f)
 }
 
 func HistoryHandler(w http.ResponseWriter, r *http.Request) {
@@ -114,12 +100,40 @@ func HistoryHandler(w http.ResponseWriter, r *http.Request) {
       return
   }
   file := path.Join("view", "history.html")
-  t, err := template.ParseFiles(file); if err != nil {
-      http.Error(w, err.Error(), http.StatusInternalServerError)
+  renderTemplate(w, file, history)
+}
+
+func ShowByIdHandler(w http.ResponseWriter, r *http.Request) {
+  filename, rawId := GetFileAndRawId(r.URL.Path, "/show-by-id/")
+  data, err := GetData(rawId); if err != nil {
+      http.Error(w, err.Error(), http.StatusNotFound)
       return
   }
-  err = t.Execute(w, history); if err != nil {
-      http.Error(w, err.Error(), http.StatusInternalServerError)
+  file := path.Join("view", "show.html")
+  renderTemplate(w, file, &Page{Title: filename, Body: data})
+}
+
+func RawByIdHandler(w http.ResponseWriter, r *http.Request) {
+  _, rawId := GetFileAndRawId(r.URL.Path, "/raw-by-id/")
+  data, err := GetData(rawId); if err != nil {
+      http.Error(w, err.Error(), http.StatusNotFound)
       return
+  }
+  _, err = w.Write(data); if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+}
+
+func DownloadByIdHandler(w http.ResponseWriter, r *http.Request) {
+  filename, rawId := GetFileAndRawId(r.URL.Path, "/download-by-id/")
+  data, err := GetData(rawId); if err != nil {
+      http.Error(w, err.Error(), http.StatusNotFound)
+      return
+  }
+  w.Header().Set("Content-Disposition", "attachment; filename="+filename)
+  _, err = w.Write(data); if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
   }
 }
