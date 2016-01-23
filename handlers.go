@@ -4,6 +4,7 @@ import (
   "html/template"
   "net/http"
   "path"
+  "io/ioutil"
 )
 
 func NewHandler(w http.ResponseWriter, r *http.Request) {
@@ -58,6 +59,20 @@ func EditHandler(w http.ResponseWriter, r *http.Request) {
     return
   }
   err = t.Execute(w, payload); if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+}
+
+func DownloadHandler(w http.ResponseWriter, r *http.Request) {
+  filename := r.URL.Path[len("/download/"):]
+  file := path.Join(*repoPath, filename)
+  data, err := ioutil.ReadFile(file); if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+  w.Header().Set("Content-Disposition", "attachment; filename="+filename)
+  _, err = w.Write(data); if err != nil {
     http.Error(w, err.Error(), http.StatusInternalServerError)
     return
   }

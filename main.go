@@ -27,6 +27,7 @@ func init() {
   http.HandleFunc("/create", CreateHandler)
   http.HandleFunc("/show/", ShowHandler)
   http.HandleFunc("/edit/", EditHandler)
+  http.HandleFunc("/download/", DownloadHandler)
   http.Handle("/assets/",http.FileServer(http.Dir(".")) )
 }
 
