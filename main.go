@@ -14,8 +14,14 @@ var (
   repoPath    = flag.String("r", "data", "Set the git repositories path where data will be saved")
 )
 
+type Page struct {
+	Title string
+	Body  string
+}
+
 func init() {
-  http.HandleFunc("/", CreateHandler)
+  http.HandleFunc("/", NewHandler)
+  http.HandleFunc("/create", CreateHandler)
 }
 
 func createRepository() *git.Repository {
