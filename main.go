@@ -19,6 +19,11 @@ type Page struct {
 }
 
 func init() {
+  err := CreateRepository(); if err != nil {
+    log.Fatal(err)
+  }
+  fmt.Println("Repository working directory set as:", repo.Workdir())
+
   http.HandleFunc("/", NewHandler)
   http.HandleFunc("/create", CreateHandler)
   http.HandleFunc("/view/", ViewHandler)
@@ -27,15 +32,10 @@ func init() {
 func main() {
   flag.Parse()
 
-  repo, err := CreateRepository(); if err != nil {
-    log.Fatal(err)
-  }
-  fmt.Println("Repository working directory set as:", repo.Workdir())
-
   addr := fmt.Sprintf("%s:%s", *host, *port)
   fmt.Println("Listening on ", addr)
 
-  if err = http.ListenAndServe(addr, nil); err != nil {
+  if err := http.ListenAndServe(addr, nil); err != nil {
     log.Fatal(err)
   }
 }

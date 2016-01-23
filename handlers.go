@@ -4,7 +4,6 @@ import (
   "html/template"
   "net/http"
   "path"
-  "fmt"
 )
 
 func NewHandler(w http.ResponseWriter, r *http.Request) {

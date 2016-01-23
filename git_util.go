@@ -5,7 +5,9 @@ import (
   "github.com/libgit2/git2go"
 )
 
-func getTree(repo *git.Repository, filename string) (*git.Tree, error) {
+var repo *git.Repository
+
+func getTree(filename string) (*git.Tree, error) {
   idx, err := repo.Index(); if err != nil {
     return nil, err
   }
@@ -24,14 +26,14 @@ func getTree(repo *git.Repository, filename string) (*git.Tree, error) {
   return tree, nil
 }
 
-func createFirstCommit(filename string, repo *git.Repository) error{
+func createFirstCommit(filename string) error{
     err := ioutil.WriteFile(*repoPath + "/" + filename, nil, 0600); if err != nil {
       return err
     }
     signature, err := repo.DefaultSignature(); if err != nil {
       return err
     }
-    tree, err := getTree(repo, filename); if err != nil {
+    tree, err := getTree(filename); if err != nil {
       return err
     }
     _ , err = repo.CreateCommit("refs/heads/master", signature, signature, "First Commit", tree); if err != nil {
@@ -40,14 +42,35 @@ func createFirstCommit(filename string, repo *git.Repository) error{
     return nil
 }
 
-func CreateRepository() (*git.Repository, error) {
-  repo, err := git.InitRepository(*repoPath, false); if err != nil {
-    return nil, err
+func CreateRepository() error {
+  var err error
+  repo, err = git.InitRepository(*repoPath, false); if err != nil {
+    return err
   }
   if _, err = repo.Head(); err != nil {
-    err = createFirstCommit(".gitignore",repo); if err != nil {
-      return nil, err
+    err = createFirstCommit(".gitignore"); if err != nil {
+      return err
     }
   }
-  return repo, nil
+  return  nil
+}
+
+func AddFileInRepo(filename string) error {
+  signature, err := repo.DefaultSignature(); if err != nil {
+    return err
+  }
+  tree, err := getTree(filename); if err != nil {
+    return err
+  }
+  head, err := repo.Head()
+  if err != nil {
+    return err
+  }
+  commitTarget, err := repo.LookupCommit(head.Branch().Target()); if err != nil {
+    return err
+  }
+  _ , err = repo.CreateCommit("refs/heads/master", signature, signature, filename, tree, commitTarget); if err != nil {
+    return err
+  }
+  return nil
 }

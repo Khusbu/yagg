@@ -11,5 +11,5 @@ func (p * Page) save() error {
   if(err != nil){
     return err
   }
-  return nil
+  return AddFileInRepo(p.Title)
 }
