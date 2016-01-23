@@ -22,6 +22,11 @@ type Files struct {
   List []string
 }
 
+type History struct {
+  Title string
+  CDiffs []CommitDiff
+}
+
 func init() {
   err := CreateRepository(); if err != nil {
     log.Fatal(err)
@@ -34,6 +39,7 @@ func init() {
   http.HandleFunc("/download/", DownloadHandler)
   http.HandleFunc("/raw/", RawHandler)
   http.HandleFunc("/list/", IndexHandler)
+  http.HandleFunc("/history/", HistoryHandler)
   http.Handle("/assets/",http.FileServer(http.Dir(".")) )
 }
 

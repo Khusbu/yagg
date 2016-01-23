@@ -23,7 +23,7 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
   title := r.FormValue("gist-name")
   body := r.FormValue("gist")
   payload := &Page{Title: title, Body: []byte(body)}
-  if err := payload.save(); err != nil {
+  if err := payload.Save(); err != nil {
       http.Error(w, err.Error(), http.StatusInternalServerError)
       return
   }
@@ -104,5 +104,22 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
   err = t.Execute(w, f); if err != nil {
     http.Error(w, err.Error(), http.StatusInternalServerError)
     return
+  }
+}
+
+func HistoryHandler(w http.ResponseWriter, r *http.Request) {
+  title := r.URL.Path[len("/history/"):]
+  history, err := GetHistory(title); if err != nil {
+      http.Error(w, err.Error(), http.StatusNotFound)
+      return
+  }
+  file := path.Join("view", "history.html")
+  t, err := template.ParseFiles(file); if err != nil {
+      http.Error(w, err.Error(), http.StatusInternalServerError)
+      return
+  }
+  err = t.Execute(w, history); if err != nil {
+      http.Error(w, err.Error(), http.StatusInternalServerError)
+      return
   }
 }
