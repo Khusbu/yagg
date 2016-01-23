@@ -28,6 +28,7 @@ func init() {
   http.HandleFunc("/show/", ShowHandler)
   http.HandleFunc("/edit/", EditHandler)
   http.HandleFunc("/download/", DownloadHandler)
+  http.HandleFunc("/raw/", RawHandler)
   http.Handle("/assets/",http.FileServer(http.Dir(".")) )
 }
 

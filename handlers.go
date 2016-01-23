@@ -38,7 +38,7 @@ func ShowHandler(w http.ResponseWriter, r *http.Request) {
     return
   }
   payload, err := GetPayload(title); if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
+    http.Error(w, err.Error(), http.StatusNotFound)
     return
   }
   err = t.Execute(w, payload); if err != nil {
@@ -55,7 +55,7 @@ func EditHandler(w http.ResponseWriter, r *http.Request) {
     return
   }
   payload, err := GetPayload(title); if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
+    http.Error(w, err.Error(), http.StatusNotFound)
     return
   }
   err = t.Execute(w, payload); if err != nil {
@@ -68,7 +68,7 @@ func DownloadHandler(w http.ResponseWriter, r *http.Request) {
   filename := r.URL.Path[len("/download/"):]
   file := path.Join(*repoPath, filename)
   data, err := ioutil.ReadFile(file); if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
+    http.Error(w, err.Error(), http.StatusNotFound)
     return
   }
   w.Header().Set("Content-Disposition", "attachment; filename="+filename)
@@ -76,4 +76,14 @@ func DownloadHandler(w http.ResponseWriter, r *http.Request) {
     http.Error(w, err.Error(), http.StatusInternalServerError)
     return
   }
+}
+
+func RawHandler(w http.ResponseWriter, r *http.Request) {
+  filename := r.URL.Path[len("/raw/"):]
+  file := path.Join(*repoPath, filename)
+  data, err := ioutil.ReadFile(file); if err != nil {
+    http.Error(w, err.Error(), http.StatusNotFound)
+    return
+  }
+  w.Write(data)
 }
