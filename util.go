@@ -21,3 +21,16 @@ func GetPayload(title string) (*Page, error) {
   }
   return &Page{Title: title, Body: body}, nil
 }
+
+func GetFileList(dir string) ([]string, error) {
+    files, err := ioutil.ReadDir(path.Join(dir, "/")); if err != nil {
+      return nil, err
+    }
+    var file_list []string
+    for _, f := range files {
+      if f.Name() != ".git" && f.Name() != ".gitignore" {
+        file_list = append(file_list, f.Name())
+      }
+    }
+    return file_list, nil
+}

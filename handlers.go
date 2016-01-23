@@ -87,3 +87,22 @@ func RawHandler(w http.ResponseWriter, r *http.Request) {
   }
   w.Write(data)
 }
+
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
+  file := path.Join("view", "index.html")
+  t, err := template.ParseFiles(file)
+  if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+  file_list, err := GetFileList(*repoPath); if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+  f := &Files{List: file_list};
+
+  err = t.Execute(w, f); if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+}

@@ -18,17 +18,22 @@ type Page struct {
 	Body  []byte
 }
 
+type Files struct {
+  List []string
+}
+
 func init() {
   err := CreateRepository(); if err != nil {
     log.Fatal(err)
   }
-  // fmt.Println("Repository working directory set as:", repo.Workdir())
+  fmt.Println("Repository working directory set as:", repo.Workdir())
   http.HandleFunc("/", NewHandler)
   http.HandleFunc("/create", CreateHandler)
   http.HandleFunc("/show/", ShowHandler)
   http.HandleFunc("/edit/", EditHandler)
   http.HandleFunc("/download/", DownloadHandler)
   http.HandleFunc("/raw/", RawHandler)
+  http.HandleFunc("/list/", IndexHandler)
   http.Handle("/assets/",http.FileServer(http.Dir(".")) )
 }
 
