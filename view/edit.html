@@ -2,10 +2,11 @@
   <link rel="stylesheet" href="/assets/bootstrap.min.css">
 </head>
 <body>
-<form role="form">
+<form role="form" action="/create" method="POST">
   <h3>Edit Gist - {{.Title}}</h3><br>
+  <input type="hidden" name="gist-name" value="{{.Title}}"/>
   <div class="form-group" >
-    <textarea name="paste" rows="20" cols="80" class="form-control">{{printf "%s" .Body}}</textarea>
+    <textarea name="gist" rows="20" cols="80" class="form-control">{{printf "%s" .Body}}</textarea>
   </div>
   <br><div>
   <div class="form-group">

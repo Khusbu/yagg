@@ -19,8 +19,8 @@ func NewHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateHandler(w http.ResponseWriter, r *http.Request) {
-  title := r.FormValue("paste-name")
-  body := r.FormValue("paste")
+  title := r.FormValue("gist-name")
+  body := r.FormValue("gist")
   payload := &Page{Title: title, Body: []byte(body)}
   if err := payload.save(); err != nil {
       http.Error(w, err.Error(), http.StatusInternalServerError)
