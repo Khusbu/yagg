@@ -7,7 +7,7 @@ import (
 )
 
 func CreateHandler(w http.ResponseWriter, r *http.Request) {
-  file := path.Join("view", "create.html")
+  file := path.Join("view", "new.html")
   t, err := template.ParseFiles(file)
   if err != nil {
     http.Error(w, err.Error(), http.StatusInternalServerError)
