@@ -14,6 +14,10 @@ var (
   repoPath    = flag.String("r", "data", "Set the git repositories path where data will be saved")
 )
 
+func init() {
+  http.HandleFunc("/", CreateHandler)
+}
+
 func createRepository() *git.Repository {
   repo, err := git.InitRepository(*repoPath, false)
   if err != nil {
@@ -30,7 +34,7 @@ func main() {
 
   addr := fmt.Sprintf("%s:%s", *host, *port)
   fmt.Println("Listening on ", addr)
-  
+
   if err := http.ListenAndServe(addr, nil); err != nil{
     log.Fatal(err)
   }
