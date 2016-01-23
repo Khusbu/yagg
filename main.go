@@ -5,7 +5,6 @@ import (
   "fmt"
   "net/http"
   "log"
-  "github.com/libgit2/git2go"
 )
 
 var (
@@ -24,24 +23,18 @@ func init() {
   http.HandleFunc("/create", CreateHandler)
 }
 
-func createRepository() *git.Repository {
-  repo, err := git.InitRepository(*repoPath, false)
-  if err != nil {
-    panic(err)
-  }
-  return repo
-}
-
 func main() {
   flag.Parse()
 
-  repo := createRepository()
+  repo, err := CreateRepository(); if err != nil {
+    log.Fatal(err)
+  }
   fmt.Println("Repository working directory set as:", repo.Workdir())
 
   addr := fmt.Sprintf("%s:%s", *host, *port)
   fmt.Println("Listening on ", addr)
 
-  if err := http.ListenAndServe(addr, nil); err != nil{
+  if err = http.ListenAndServe(addr, nil); err != nil {
     log.Fatal(err)
   }
 }
