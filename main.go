@@ -22,11 +22,12 @@ func init() {
   err := CreateRepository(); if err != nil {
     log.Fatal(err)
   }
-  fmt.Println("Repository working directory set as:", repo.Workdir())
-
+  // fmt.Println("Repository working directory set as:", repo.Workdir())
   http.HandleFunc("/", NewHandler)
   http.HandleFunc("/create", CreateHandler)
-  http.HandleFunc("/view/", ViewHandler)
+  http.HandleFunc("/show/", ShowHandler)
+  http.HandleFunc("/edit/", EditHandler)
+  http.Handle("/assets/",http.FileServer(http.Dir(".")) )
 }
 
 func main() {

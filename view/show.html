@@ -1,0 +1,12 @@
+<head>
+  <link rel="stylesheet" href="/assets/bootstrap.min.css">
+</head>
+<body>
+  <div class="panel panel-default">
+    <div class="panel-heading"><h2>{{.Title}}<h2></div>
+    <div class="panel-body"><pre>{{printf "%s" .Body}}</pre></div>
+  </div>
+  <div><a href="/" role="button">Back</a></div>
+  <br>
+  <div><a href="/edit/{{.Title}}" role="button">Edit</a></div>
+</body>

@@ -1,0 +1,18 @@
+<head>
+  <link rel="stylesheet" href="/assets/bootstrap.min.css">
+</head>
+<body>
+<form role="form">
+  <h3>Edit Gist - {{.Title}}</h3><br>
+  <div class="form-group" >
+    <textarea name="paste" rows="20" cols="80" class="form-control">{{printf "%s" .Body}}</textarea>
+  </div>
+  <br><div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+  <div class="form-group">
+    <a href="/view/{{.Title}}" class="btn btn-primary" role="button">Cancel</a>
+  </div></div>
+</form>
+<body>

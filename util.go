@@ -13,3 +13,11 @@ func (p * Page) save() error {
   }
   return AddFileInRepo(p.Title)
 }
+
+func GetPayload(title string) (*Page, error) {
+  file := path.Join(*repoPath, title)
+  body, err := ioutil.ReadFile(file); if err != nil {
+        return nil,err
+  }
+  return &Page{Title: title, Body: body}, nil
+}

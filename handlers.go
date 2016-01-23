@@ -26,11 +26,39 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
       http.Error(w, err.Error(), http.StatusInternalServerError)
       return
   }
-  http.Redirect(w, r, "/view/" + title, http.StatusFound)
+  http.Redirect(w, r, "/show/" + title, http.StatusFound)
 }
 
-func ViewHandler(w http.ResponseWriter, r *http.Request) {
-  title := r.URL.Path[len("/view/"):]
-  file := path.Join(*repoPath, title)
-  http.ServeFile(w, r, file)
+func ShowHandler(w http.ResponseWriter, r *http.Request) {
+  title := r.URL.Path[len("/show/"):]
+  file := path.Join("view", "show.html")
+  t, err := template.ParseFiles(file); if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+  payload, err := GetPayload(title); if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+  err = t.Execute(w, payload); if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+}
+
+func EditHandler(w http.ResponseWriter, r *http.Request) {
+  title := r.URL.Path[len("/edit/"):]
+  file := path.Join("view", "edit.html")
+  t, err := template.ParseFiles(file); if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+  payload, err := GetPayload(title); if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+  err = t.Execute(w, payload); if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
 }
