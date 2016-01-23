@@ -44,8 +44,10 @@ func CreateRepository() (*git.Repository, error) {
   repo, err := git.InitRepository(*repoPath, false); if err != nil {
     return nil, err
   }
-  err = createFirstCommit(".gitignore",repo); if err != nil {
-    return nil, err
+  if _, err = repo.Head(); err != nil {
+    err = createFirstCommit(".gitignore",repo); if err != nil {
+      return nil, err
+    }
   }
   return repo, nil
 }

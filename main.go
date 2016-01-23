@@ -15,12 +15,13 @@ var (
 
 type Page struct {
 	Title string
-	Body  string
+	Body  []byte
 }
 
 func init() {
   http.HandleFunc("/", NewHandler)
   http.HandleFunc("/create", CreateHandler)
+  http.HandleFunc("/view/", ViewHandler)
 }
 
 func main() {
