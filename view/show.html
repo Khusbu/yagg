@@ -1,18 +1,42 @@
-<head>
-  <link rel="stylesheet" href="/assets/bootstrap.min.css">
-</head>
-<body>
-  <div class="panel panel-default">
-    <div class="panel-heading"><h2>{{.Title}}<h2></div>
-    <div class="panel-body"><pre>{{printf "%s" .Body}}</pre></div>
-  </div>
-  <div><a href="/" role="button">Back</a></div>
-  <br>
-  <div><a href="/edit/{{.Title}}" role="button">Edit</a></div>
-  <br>
-  <div><a href="/download/{{.Title}}" role="button">Download</a></div>
-  <br>
-  <div><a href="/raw/{{.Title}}" target="_blank" role="button">Raw</a></div>
-  <br>
-  <div><a href="/history/{{.Title}}" role="button">History</a></div>
-</body>
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/assets/mystyle.css">
+    <link rel="stylesheet" href="/assets/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/github.min.css">
+    <script src="/javascripts/highlight.min.js"></script>
+    <script src="/javascripts/scala.min.js"></script>
+  </head>
+
+  <body>
+    <div class="page-header">
+      <h3 align="center">YAGG</h3>
+      <div style="float: right;">
+        <a class="btn btn-default pull-right" href="/"><b>Create New Gist<b></a>
+      </div>
+    </div>
+    <h4 id="header">View Gist - {{.Title}}</h4>
+
+    <div id="wrapper">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="btn-group pull-right">
+            <a href="/raw/{{.Title}}" target="_blank" class="btn btn-default">Raw</a>
+            <a href="/download/{{.Title}}" class="btn btn-default">Download</a>
+            <a href="/history/{{.Title}}" class="btn btn-default">History</a>
+            <a href="/edit/{{.Title}}" class="btn btn-default">Edit</a>
+          </div>
+        </div>
+        <div class="panel-body">
+          <pre style="background: #F8F8F8;">
+            <div id="view">{{printf "%s" .Body}}</div>
+            <script>
+              hljs.highlightBlock(document.getElementById("view"));
+            </script>
+          </pre>
+        </div>
+      </div>
+      <a href="/" class="btn btn-primary" role="button">Back</a>
+    </div>
+  </body>
+</html>
