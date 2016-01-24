@@ -28,12 +28,22 @@ func NewHandler(w http.ResponseWriter, r *http.Request) {
 func CreateHandler(w http.ResponseWriter, r *http.Request) {
   title := r.FormValue("gist-name")
   body := r.FormValue("gist")
-  payload := &Page{Title: title, Body: []byte(body)}
-  if err := payload.Save(); err != nil {
-      http.Error(w, err.Error(), http.StatusInternalServerError)
-      return
+  api := r.FormValue("api")
+  file_list, err := GetFileList(*repoPath); if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
   }
-  http.Redirect(w, r, "/show/" + title, http.StatusFound)
+  if api == "new" && !CheckFileName(file_list, title) {
+    file := path.Join("view", "new.html")
+    renderTemplate(w, file, &Error{Message: "Gist Name already exists"})
+  } else {
+    payload := &Page{Title: title, Body: []byte(body)}
+    if err := payload.Save(); err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+    http.Redirect(w, r, "/show/" + title, http.StatusFound)
+  }
 }
 
 func ShowHandler(w http.ResponseWriter, r *http.Request) {

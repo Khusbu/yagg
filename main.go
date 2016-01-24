@@ -18,6 +18,10 @@ type Page struct {
 	Body  []byte
 }
 
+type Error struct {
+  Message string
+}
+
 type Files struct {
   List []string
 }

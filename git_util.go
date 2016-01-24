@@ -3,7 +3,6 @@ package main
 import (
   "io/ioutil"
   "strings"
-  "fmt"
   "github.com/libgit2/git2go"
 )
 
@@ -108,15 +107,12 @@ func GetData(rawId string) ([]byte, error){
 
 func findContentByCommitId(commitId *git.Oid) ([]byte,error){
   commit, err := repo.LookupCommit(commitId); if err != nil {
-    fmt.Println("LookupCommit error")
     return nil, err
   }
   tree, err := commit.Tree(); if err != nil {
-    fmt.Println("Tree error")
     return nil, err
   }
   blob, err := repo.LookupBlob(tree.EntryByName(commit.Message()).Id); if err != nil {
-    fmt.Println("LookupBlob error")
     return nil, err
   }
   return blob.Contents(), nil

@@ -90,3 +90,12 @@ func GetFileAndRawId(path string, apiName string) (string, string){
   rawId := path[index+1:]
   return filename, rawId
 }
+
+func CheckFileName(file_list []string, filename string) bool {
+  for _, file := range file_list {
+      if file == filename {
+        return false
+      }
+  }
+  return true
+}
