@@ -1,0 +1,44 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>YAGG</title>
+    <link rel="stylesheet" href="/assets/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/codemirror.css">
+    <link rel="stylesheet" href="/assets/github.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/diff2html.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/mystyle.css">
+    <script src="/javascripts/highlight.min.js"></script>
+    <script src="/javascripts/scala.min.js"></script>
+    <script type="text/javascript" src="/javascripts/codemirror.js"></script>
+    <script type="text/javascript" src="/javascripts/diff2html.min.js"></script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">YAGG</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <div class="navbar-form navbar-right">
+            <a href="/list/" class="btn btn-default"><b>All Gists</b></a>
+            <a href="/" class="btn btn-primary"><b>New Gist</b></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="jumbotron">
+      <div class="container">
+  			{{ template "content" . }}
+      </div>
+    </div>
+  </body>
+</html>

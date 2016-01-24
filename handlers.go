@@ -8,7 +8,8 @@ import (
 )
 
 func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-    t, err := template.ParseFiles(tmpl)
+    shared := path.Join("view", "shared.html")
+    t, err := template.ParseFiles(shared, tmpl)
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
         return
