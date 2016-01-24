@@ -106,7 +106,7 @@ yagg  [-b] [-h] [-p] [-r]
 
 - **Delete** 
     
-    -```http://0.0.0.0:8080/download/gist-name```
+    -```http://0.0.0.0:8080/remove/gist-name```
 
 - **View all**:
 
