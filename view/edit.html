@@ -1,19 +1,30 @@
-<head>
-  <link rel="stylesheet" href="/assets/bootstrap.min.css">
-</head>
-<body>
-<form role="form" action="/create" method="POST">
-  <h3>Edit Gist - {{.Title}}</h3><br>
-  <input type="hidden" name="gist-name" value="{{.Title}}"/>
-  <div class="form-group" >
-    <textarea name="gist" rows="20" cols="80" class="form-control">{{printf "%s" .Body}}</textarea>
-  </div>
-  <br><div>
-  <div class="form-group">
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </div>
-  <div class="form-group">
-    <a href="/view/{{.Title}}" class="btn btn-primary" role="button">Cancel</a>
-  </div></div>
-</form>
-<body>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/assets/mystyle.css">
+    <link rel="stylesheet" href="/assets/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/codemirror.css">
+    <script type="text/javascript" src="/javascripts/codemirror.js"></script>
+  </head>
+  <body>
+    <div class="page-header">
+      <h2 align="center">YAGG</h2>
+    </div>
+    <h3 id="header">Edit Gist - {{.Title}}</h3>
+    <div id="wrapper">
+    <form role="form" action="/create" method="POST">
+      <div class="form-group">
+        <textarea class="form-control" name="gist" rows="20" cols="80" id="editor">{{printf "%s" .Body}}</textarea>
+        <script>
+          element = document.getElementById("editor");
+          CodeMirror.fromTextArea(element, {lineNumbers: true});
+        </script>
+      </div>
+      <div class="form-group">
+        <input type="hidden" name="gist-name" value="{{.Title}}"/>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>&nbsp;&nbsp;&nbsp;
+        <a href="/show/{{.Title}}" class="btn btn-primary" role="button">Cancel</a>
+      </div>
+    </form>
+    </div>
+  </body>

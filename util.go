@@ -6,6 +6,7 @@ import(
   "github.com/libgit2/git2go"
   "errors"
   "strings"
+  "os"
 )
 
 func (p * Page) Save() error {
@@ -13,6 +14,12 @@ func (p * Page) Save() error {
   err := ioutil.WriteFile(filename, p.Body, 0600)
   if(err != nil){
     return err
+  }
+  if _, err := os.Stat(filename); err == nil {
+    reader,_ := ioutil.ReadFile(filename)
+    if (string(reader) == string(p.Body)){
+      return nil
+    }
   }
   return AddFileInRepo(p.Title)
 }
