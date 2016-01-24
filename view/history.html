@@ -33,7 +33,7 @@
 <a href="/show/{{.Title}}"><h3>{{.Title}}</h3></a>
 <div>
   {{range $element := .CDiffs}}
-  <span><br><strong>Committed at {{$element.CommitedOn}}</strong></span>
+  <span><br><b>Committed at {{$element.CommitedOn}}</b></span>
     <div class="btn-group pull-right">
       <a href="/show-by-id/{{$.Title}}/{{$element.CommitId}}" class="btn btn-default" role="button"><b>View</b></a>
       <a href="/raw-by-id/{{$.Title}}/{{$element.CommitId}}" target="_blank" class="btn btn-default" role="button"><b>Raw</b></a>

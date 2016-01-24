@@ -25,5 +25,8 @@
       </pre>
     </div>
   </div>
+  {{if .DisableButtons}}
+  <a href="/history/{{.Title}}" class="btn btn-primary" role="button">Back</a>
+  {{end}}
 </div>
 {{end}}
