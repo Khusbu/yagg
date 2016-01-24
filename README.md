@@ -1,6 +1,10 @@
 # yagg
 
-**Y**et **A**nother **G**it **G**ist is a light-weight no-database public git-gist. It allows operations like creating, editing, viewing, downloading and showing history of the gists created.
+**Y**et **A**nother **G**it **G**ist is a no-database public git-gist.
+
+## Utility
+
+It's an user-friendly web-app designed primarily to keep a record of text snippets using light-weight git. Gists can be created and shared locally (for e.g. in an organization). The changes can be tracked easily. One can also view the list of gists and edit, delete, download, remove etc. as required.
 
 ## Installation
 
@@ -44,10 +48,6 @@ yagg  [-b] [-h] [-p] [-r]
 
 ## Options:
 
-
-``` -b host-name```
-    Used to set the hostname for the server. If nothing is specified, 0.0.0.0 will be used as the host.
-
 ``` -h ```
     Used for getting the usage of the flags.
 
@@ -56,6 +56,9 @@ yagg  [-b] [-h] [-p] [-r]
 
 ``` -p port-number ```
      Used to specify the port used by YAGG. Port 8080 will be used by default.
+     
+``` -b host-name```
+    Used to set the hostname for the server. If nothing is specified, 0.0.0.0 will be used as the host.
 
 ## How to use:
 
@@ -119,7 +122,7 @@ yagg  [-b] [-h] [-p] [-r]
 - Sorting gists in the list page based on options like last updated, etc. Currently gists are sorted in the order of gist-name
 - Search field to be included
 - Option of uploading a file as a gist
-- User specific
+- Creating user-specific gists
 - User Interface to be enhanced
 
  ## References
