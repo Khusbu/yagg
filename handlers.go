@@ -121,7 +121,7 @@ func HistoryHandler(w http.ResponseWriter, r *http.Request) {
 
 func ShowByIdHandler(w http.ResponseWriter, r *http.Request) {
   filename, rawId := GetFileAndRawId(r.URL.Path, "/show-by-id/")
-  data, err := GetData(rawId); if err != nil {
+  data, err := GetData(rawId); if err != nil || data == nil {
       errorPage(w,r)
       return
   }
@@ -131,7 +131,7 @@ func ShowByIdHandler(w http.ResponseWriter, r *http.Request) {
 
 func RawByIdHandler(w http.ResponseWriter, r *http.Request) {
   _, rawId := GetFileAndRawId(r.URL.Path, "/raw-by-id/")
-  data, err := GetData(rawId); if err != nil {
+  data, err := GetData(rawId); if err != nil || data == nil {
       errorPage(w,r)
       return
   }
@@ -143,7 +143,7 @@ func RawByIdHandler(w http.ResponseWriter, r *http.Request) {
 
 func DownloadByIdHandler(w http.ResponseWriter, r *http.Request) {
   filename, rawId := GetFileAndRawId(r.URL.Path, "/download-by-id/")
-  data, err := GetData(rawId); if err != nil {
+  data, err := GetData(rawId); if err != nil || data == nil {
       errorPage(w,r)
       return
   }
@@ -152,4 +152,13 @@ func DownloadByIdHandler(w http.ResponseWriter, r *http.Request) {
     http.Error(w, err.Error(), http.StatusInternalServerError)
     return
   }
+}
+
+func RemoveHandler(w http.ResponseWriter, r *http.Request) {
+  filename := r.URL.Path[len("/remove/"):]
+  if err := RemoveFile(filename); err != nil {
+    errorPage(w,r)
+    return
+  }
+  http.Redirect(w, r, "/list/", http.StatusFound)
 }

@@ -14,11 +14,21 @@ type CommitDiff struct{
 
 var repo *git.Repository
 
-func getTree(filename string) (*git.Tree, error) {
+func fileOperation(filename string, operation string, idx *git.Index) error {
+  var err error
+  if operation == "add" {
+    err = idx.AddByPath(filename)
+  } else if operation == "remove" {
+    err = idx.RemoveByPath(filename)
+  }
+  return err
+}
+
+func getTree(filename string, operation string) (*git.Tree, error) {
   idx, err := repo.Index(); if err != nil {
     return nil, err
   }
-  err = idx.AddByPath(filename); if err != nil {
+  if err = fileOperation(filename, operation, idx); err != nil {
     return nil, err
   }
   err = idx.Write(); if err != nil {
@@ -33,14 +43,14 @@ func getTree(filename string) (*git.Tree, error) {
   return tree, nil
 }
 
-func createFirstCommit(filename string) error{
+func createFirstCommit(filename string, operation string) error{
     err := ioutil.WriteFile(*repoPath + "/" + filename, nil, 0600); if err != nil {
       return err
     }
     signature, err := repo.DefaultSignature(); if err != nil {
       return err
     }
-    tree, err := getTree(filename); if err != nil {
+    tree, err := getTree(filename, operation); if err != nil {
       return err
     }
     _ , err = repo.CreateCommit("refs/heads/master", signature, signature, "First Commit", tree); if err != nil {
@@ -55,18 +65,18 @@ func CreateRepository() error {
     return err
   }
   if _, err = repo.Head(); err != nil {
-    err = createFirstCommit(".gitignore"); if err != nil {
+    err = createFirstCommit(".gitignore", "add"); if err != nil {
       return err
     }
   }
   return  nil
 }
 
-func AddFileInRepo(filename string) error {
+func AddFileInRepo(filename string, operation string) error {
   signature, err := repo.DefaultSignature(); if err != nil {
     return err
   }
-  tree, err := getTree(filename); if err != nil {
+  tree, err := getTree(filename, operation); if err != nil {
     return err
   }
   head, err := repo.Head()
@@ -112,7 +122,10 @@ func findContentByCommitId(commitId *git.Oid) ([]byte,error){
   tree, err := commit.Tree(); if err != nil {
     return nil, err
   }
-  blob, err := repo.LookupBlob(tree.EntryByName(commit.Message()).Id); if err != nil {
+  treeByName := tree.EntryByName(commit.Message()); if treeByName == nil {
+    return nil, nil
+  }
+  blob, err := repo.LookupBlob(treeByName.Id); if err != nil {
     return nil, err
   }
   return blob.Contents(), nil

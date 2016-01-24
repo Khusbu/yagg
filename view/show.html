@@ -6,15 +6,16 @@
       <div class="container">
       <div style="float:left;"><h4>{{.Title}}</h4></div>
       <div class="btn-group pull-right" style="float:right;">
-        <a href="/raw/{{.Title}}" target="_blank" class="btn btn-default">Raw</a>
-        <a href="/download/{{.Title}}" class="btn btn-default">Download</a>
-        <a href="/history/{{.Title}}" class="btn btn-default">History</a>
-        <a href="/edit/{{.Title}}" class="btn btn-default">Edit</a>
+        <a href="/raw/{{.Title}}" target="_blank" class="btn btn-default"><b>Raw</b></a>
+        <a href="/download/{{.Title}}" class="btn btn-default"><b>Download</b></a>
+        <a href="/history/{{.Title}}" class="btn btn-default"><b>History</b></a>
+        <a href="/edit/{{.Title}}" class="btn btn-default"><b>Edit</b></a>
+        <a href="/remove/{{.Title}}" class="btn btn-danger"><b>Remove</b></a>
       </div>
     </div>
     </div>
     <div class="panel-body">
-      <pre>
+      <pre style="background: #F8F8F8;">
         <div id="view">{{printf "%s" .Body}}</div>
         <script>
           hljs.highlightBlock(document.getElementById("view"));

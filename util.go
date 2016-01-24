@@ -21,7 +21,7 @@ func (p * Page) Save() error {
   if(err != nil){
     return err
   }
-  return AddFileInRepo(p.Title)
+  return AddFileInRepo(p.Title, "add")
 }
 
 func GetPayload(title string) (*Page, error) {
@@ -98,4 +98,12 @@ func CheckFileName(file_list []string, filename string) bool {
       }
   }
   return true
+}
+
+func RemoveFile(filename string) error {
+  filepath := path.Join(*repoPath, filename)
+  if err := os.Remove(filepath); err != nil {
+    return err
+  }
+  return AddFileInRepo(filename, "remove")
 }

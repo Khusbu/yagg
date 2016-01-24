@@ -44,6 +44,7 @@ func init() {
   http.HandleFunc("/raw/", RawHandler)
   http.HandleFunc("/list/", IndexHandler)
   http.HandleFunc("/history/", HistoryHandler)
+  http.HandleFunc("/remove/", RemoveHandler)
   http.HandleFunc("/show-by-id/", ShowByIdHandler)
   http.HandleFunc("/raw-by-id/", RawByIdHandler)
   http.HandleFunc("/download-by-id/", DownloadByIdHandler)
