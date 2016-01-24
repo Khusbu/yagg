@@ -1,6 +1,6 @@
 # yagg
 
-Yet-Another-Git-Gist(YAGG) is a light-weight no-database git gist. It allows operations like creating, editing, viewing, downloading and showing history of the gists created.
+Yet-Another-Git-Gist(YAGG) is a light-weight no-database public git-gist. It allows operations like creating, editing, viewing, downloading and showing history of the gists created.
 
 ## Installation
 
@@ -36,10 +36,10 @@ Yet-Another-Git-Gist(YAGG) is a light-weight no-database git gist. It allows ope
       $ sudo ldconfig
     ```
 
-## Server Side Usages:
+## Server Side Commands:
 
 ```
-servidor  [-b] [-h] [-p] [-r]
+yagg  [-b] [-h] [-p] [-r]
 ```
 
 ## Options:
@@ -57,16 +57,45 @@ servidor  [-b] [-h] [-p] [-r]
 ``` -p port-number ```
      Used to specify the port used by YAGG. Port 8080 will be used by default.
 
-## Examples:
+## How to do:
 
-**$ YAGG**
+- Run the server at 0.0.0.0:8080 using command :
 
-Runs the server at 0.0.0.0:8080
+  ```
+  $ yagg -b 0.0.0.0 -p 8080
+  ```
 
-**$ yagg -b 0.0.0.0 -p 8080**
+- Let's create our first gist ``` main.go ```:
 
+    ![Create-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/create_gist.png "create")
 
-## Acknowledgement
+- View using gist-name or commit ID:
+
+    ![View-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/view_gist.png "view")
+
+- Edit :
+
+    ![Edit-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/edit_gist.png "edit")
+
+- Track the changes :
+
+    ![History-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/history_gist.png "history")
+
+- Raw File using gist-name or commit ID:
+    - ```wget http://0.0.0.0:8080/raw/(gist-name|commit-id)``` from command line
+    - Browser:
+
+        ![Raw-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/raw_gist.png "raw")
+
+- Download using gist-name or commit ID
+
+- Delete
+
+- View all gists:
+
+    ![List-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/list_gist.png "list")
+
+ ## References
 - [Diff2Html](https://github.com/rtfpessoa/diff2html)
 - [git2go](https://godoc.org/github.com/libgit2/git2go)
-- [blog]https://blog.gopheracademy.com/advent-2014/git2go-tutorial/
+- [blog](https://blog.gopheracademy.com/advent-2014/git2go-tutorial/)
