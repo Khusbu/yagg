@@ -94,7 +94,6 @@ func RawHandler(w http.ResponseWriter, r *http.Request) {
     return
   }
   _, err = w.Write(data); if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
     return
   }
 }
@@ -136,7 +135,6 @@ func RawByIdHandler(w http.ResponseWriter, r *http.Request) {
       return
   }
   _, err = w.Write(data); if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
     return
   }
 }
@@ -149,7 +147,6 @@ func DownloadByIdHandler(w http.ResponseWriter, r *http.Request) {
   }
   w.Header().Set("Content-Disposition", "attachment; filename="+filename)
   _, err = w.Write(data); if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
     return
   }
 }
