@@ -7,6 +7,11 @@ import (
   "io/ioutil"
 )
 
+func errorPage(w http.ResponseWriter, r *http.Request) {
+  err := path.Join("view", "error.html")
+	renderTemplate(w, err, nil)
+}
+
 func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
     shared := path.Join("view", "shared.html")
     t, err := template.ParseFiles(shared, tmpl)
@@ -51,7 +56,7 @@ func ShowHandler(w http.ResponseWriter, r *http.Request) {
   title := r.URL.Path[len("/show/"):]
   file := path.Join("view", "show.html")
   payload, err := GetPayload(title); if err != nil {
-    http.Error(w, err.Error(), http.StatusNotFound)
+    errorPage(w,r)
     return
   }
   renderTemplate(w, file, payload)
@@ -61,7 +66,7 @@ func EditHandler(w http.ResponseWriter, r *http.Request) {
   title := r.URL.Path[len("/edit/"):]
   file := path.Join("view", "edit.html")
   payload, err := GetPayload(title); if err != nil {
-    http.Error(w, err.Error(), http.StatusNotFound)
+    errorPage(w,r)
     return
   }
   renderTemplate(w, file, payload)
@@ -71,7 +76,7 @@ func DownloadHandler(w http.ResponseWriter, r *http.Request) {
   filename := r.URL.Path[len("/download/"):]
   file := path.Join(*repoPath, filename)
   data, err := ioutil.ReadFile(file); if err != nil {
-    http.Error(w, err.Error(), http.StatusNotFound)
+    errorPage(w,r)
     return
   }
   w.Header().Set("Content-Disposition", "attachment; filename="+filename)
@@ -85,7 +90,7 @@ func RawHandler(w http.ResponseWriter, r *http.Request) {
   filename := r.URL.Path[len("/raw/"):]
   file := path.Join(*repoPath, filename)
   data, err := ioutil.ReadFile(file); if err != nil {
-    http.Error(w, err.Error(), http.StatusNotFound)
+    errorPage(w,r)
     return
   }
   _, err = w.Write(data); if err != nil {
@@ -107,7 +112,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 func HistoryHandler(w http.ResponseWriter, r *http.Request) {
   title := r.URL.Path[len("/history/"):]
   history, err := GetHistory(title); if err != nil {
-      http.Error(w, err.Error(), http.StatusNotFound)
+      errorPage(w,r)
       return
   }
   file := path.Join("view", "history.html")
@@ -117,7 +122,7 @@ func HistoryHandler(w http.ResponseWriter, r *http.Request) {
 func ShowByIdHandler(w http.ResponseWriter, r *http.Request) {
   filename, rawId := GetFileAndRawId(r.URL.Path, "/show-by-id/")
   data, err := GetData(rawId); if err != nil {
-      http.Error(w, err.Error(), http.StatusNotFound)
+      errorPage(w,r)
       return
   }
   file := path.Join("view", "show.html")
@@ -127,7 +132,7 @@ func ShowByIdHandler(w http.ResponseWriter, r *http.Request) {
 func RawByIdHandler(w http.ResponseWriter, r *http.Request) {
   _, rawId := GetFileAndRawId(r.URL.Path, "/raw-by-id/")
   data, err := GetData(rawId); if err != nil {
-      http.Error(w, err.Error(), http.StatusNotFound)
+      errorPage(w,r)
       return
   }
   _, err = w.Write(data); if err != nil {
@@ -139,7 +144,7 @@ func RawByIdHandler(w http.ResponseWriter, r *http.Request) {
 func DownloadByIdHandler(w http.ResponseWriter, r *http.Request) {
   filename, rawId := GetFileAndRawId(r.URL.Path, "/download-by-id/")
   data, err := GetData(rawId); if err != nil {
-      http.Error(w, err.Error(), http.StatusNotFound)
+      errorPage(w,r)
       return
   }
   w.Header().Set("Content-Disposition", "attachment; filename="+filename)

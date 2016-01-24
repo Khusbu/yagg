@@ -9,7 +9,7 @@ import (
 
 var (
 	port        = flag.String("p", "8080", "Port to run yagg")
-	host        = flag.String("b", "localhost", "Hostname to be used")
+	host        = flag.String("b", "0.0.0.0", "Hostname to be used")
   repoPath    = flag.String("r", "data", "Set the git repositories path where data will be saved")
 )
 

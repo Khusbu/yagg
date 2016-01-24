@@ -1,16 +1,14 @@
 {{ define "content" }}
-<form role="form" action="/create" method="POST">
+<form role="form" action="/create" method="POST" style="padding-top: 30px;">
   <div class="form-group">
-    <h3>Gist Name:&nbsp;&nbsp;</h3>
     <div name="error" style="color: red;">{{.Message}}</div>
-    <input type="text" name="gist-name" class="form-control" required>
+    <input type="text" name="gist-name" class="form-control" placeholder="Name your gist" required>
   </div>
   <div class="form-group">
     <input type="hidden" name="api" value="new"/>
   </div>
-  <h3>New Gist:</h3>
   <div class="form-group">
-    <textarea name="gist" rows="20" cols="80" class="form-control" id="editor"></textarea>
+    <textarea name="gist" placeholder="Start filling in..." rows="20" cols="80" class="form-control" id="editor"></textarea>
     <script>
       element = document.getElementById("editor");
       CodeMirror.fromTextArea(element, {lineNumbers: true});

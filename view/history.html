@@ -30,7 +30,7 @@
   });
 </script>
 
-<h4>Past Commits - {{.Title}}</h4>
+<a href="/show/{{.Title}}"><h3>{{.Title}}</h3></a>
 <div>
   {{range $element := .CDiffs}}
   <span><br><strong>Committed at {{$element.CommitedOn}}</strong></span>
