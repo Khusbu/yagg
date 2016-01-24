@@ -1,6 +1,6 @@
 # yagg
 
-Yet-Another-Git-Gist is a light-weight no-database public git-gist. It allows operations like creating, editing, viewing, downloading and showing history of the gists created.
+**Y**et **A**nother **G**it **G**ist is a light-weight no-database public git-gist. It allows operations like creating, editing, viewing, downloading and showing history of the gists created.
 
 ## Installation
 
@@ -52,7 +52,7 @@ yagg  [-b] [-h] [-p] [-r]
     Used for getting the usage of the flags.
 
 ``` -r path/to/save/repo ```
-     Used to set the repository path where the git-gist repository will be saved. If nothing is specified, present working directory will be set as the default path.
+     Used to set the repository path where the git-gist repository will be saved. If nothing is specified, data folder in the present working directory will be set as the default path.
 
 ``` -p port-number ```
      Used to specify the port used by YAGG. Port 8080 will be used by default.
@@ -65,41 +65,41 @@ yagg  [-b] [-h] [-p] [-r]
   $ yagg -b 0.0.0.0 -p 8080
   ```
 
-- Let's create our first gist ``` main.go ```:
+- Let's **create** our first gist ``` main.go ```:
 
     ![Create-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/create_gist.png "create")
 
-- View using gist-name or commit ID:
+- **View** using gist-name or commit ID:
 
     ![View-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/view_gist.png "view")
 
-- Edit :
+- **Edit** using gist-name :
 
     ![Edit-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/edit_gist.png "edit")
 
-- Track the changes :
+- Track the **changes** using gist-name :
 
     ![History-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/history_gist.png "history")
 
-- Raw File using gist-name or commit ID:
+- Generate **raw** file using gist-name or commit ID:
     - ```wget http://0.0.0.0:8080/raw/(gist-name|commit-id)``` from command line
     - Browser:
 
         ![Raw-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/raw_gist.png "raw")
 
-- Download using gist-name or commit ID
+- **Download** using gist-name or commit ID
 
-- Delete
+- **Delete** using gist-name
 
-- View all gists:
+- **View all gists**:
 
     ![List-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/list_gist.png "list")
     
 ## To-do:
-- Sorting gists in the list page based on options like last updated, etc. Currently gists are sorted in the order of gist-name.
-- Search bar to be included for Gist searching
+- Sorting gists in the list page based on options like last updated, etc. Currently gists are sorted in the order of gist-name
+- Search field to be included
 - Option of uploading a file as a gist
-- User specific gists
+- User specific
 - User Interface to be enhanced
 
  ## References
