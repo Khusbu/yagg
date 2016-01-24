@@ -91,7 +91,9 @@ yagg  [-b] [-h] [-p] [-r]
     ![History-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/history_gist.png "history")
 
 - Generate **raw** file
+    
     - ```http://0.0.0.0:8080/raw/gist-name```
+    
     - ```http://0.0.0.0:8080/raw-by-id/gist-name/commit-id```
 
         ![Raw-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/raw_gist.png "raw")
@@ -99,13 +101,17 @@ yagg  [-b] [-h] [-p] [-r]
 - **Download** 
 
     -```http://0.0.0.0:8080/download/gist-name```
+    
     -```http://0.0.0.0:8080/download-by-id/gist-name/commit-id```
 
 - **Delete** 
+    
     -```http://0.0.0.0:8080/download/gist-name```
 
 - **View all**:
 
+    -```http://0.0.0.0:8080/list```
+    
     ![List-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/list_gist.png "list")
     
 ## To-do:
