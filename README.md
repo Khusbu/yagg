@@ -92,11 +92,8 @@ yagg  [-b] [-h] [-p] [-r]
 
 - Generate **raw** file
     
-    - ```http://0.0.0.0:8080/raw/gist-name```
+    - wget ```http://0.0.0.0:8080/raw/gist-name```
 
-    
-    - ```http://0.0.0.0:8080/raw-by-id/gist-name/commit-id```
-    
     
     ![Raw-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/raw_gist.png "raw")
 
