@@ -57,7 +57,7 @@ yagg  [-b] [-h] [-p] [-r]
 ``` -p port-number ```
      Used to specify the port used by YAGG. Port 8080 will be used by default.
 
-## How to do:
+## How to use:
 
 - Run the server at 0.0.0.0:8080 using command :
 
@@ -65,29 +65,41 @@ yagg  [-b] [-h] [-p] [-r]
   $ yagg -b 0.0.0.0 -p 8080
   ```
 
-- Let's **create** our first gist ``` main.go ```:
+- Let's **create** our first gist ``` main.go ```
+
+    - ```http://0.0.0.0:8080/```
 
     ![Create-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/create_gist.png "create")
 
-- **View** using gist-name or commit ID:
+- **View** 
+    
+    - ```http://0.0.0.0:8080/show/gist-name```
+    - ```http://0.0.0.0:8080/show-by-id/gist-name/commit-id```
 
     ![View-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/view_gist.png "view")
 
-- **Edit** using gist-name :
+- **Edit**
+    
+    - ```http://0.0.0.0:8080/edit/gist-name```
 
     ![Edit-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/edit_gist.png "edit")
 
-- Track the **changes** using gist-name :
+- Track the **changes** 
+    
+    - ```http://0.0.0.0:8080/history/gist-name```
 
     ![History-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/history_gist.png "history")
 
-- Generate **raw** file using gist-name or commit ID:
-    - ```wget http://0.0.0.0:8080/raw/(gist-name|commit-id)``` from command line
-    - Browser:
+- Generate **raw** file
+    - ```http://0.0.0.0:8080/raw/gist-name```
+    - ```http://0.0.0.0:8080/raw-by-id/gist-name/commit-id``
 
         ![Raw-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/raw_gist.png "raw")
 
-- **Download** using gist-name or commit ID
+- **Download** 
+
+    -```http://0.0.0.0:8080/download/gist-name``
+    -```http://0.0.0.0:8080/download-by-id/gist-name/commit-id```
 
 - **Delete** using gist-name
 
