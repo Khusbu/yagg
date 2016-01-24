@@ -1,21 +1,32 @@
 <head>
+  <link rel="stylesheet" type="text/css" href="/assets/mystyle.css">
   <link rel="stylesheet" href="/assets/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/codemirror.css">
+  <script type="text/javascript" src="/javascripts/codemirror.js"></script>
 </head>
 <body>
-<form role="form" action="/create" method="POST">
-  <h3>New Gist</h3><br>
-  <div class="form-group" >
-    <textarea name="gist" rows="20" cols="80" class="form-control"></textarea>
+  <div class="page-header">
+    <h2 align="center">YAGG</h2>
   </div>
-  <div class="form-group">
-    <h3>Gist Name:&nbsp;&nbsp;</h3>
-    <input type="text" name="gist-name" class="form-control">
+
+  <div class="container">
+    <form role="form" action="/create" method="POST">
+      <div class="form-group">
+        <h3>Gist Name:&nbsp;&nbsp;</h3>
+        <input type="text" name="gist-name" class="form-control">
+      </div>
+      <h3>New Gist:</h3>
+      <div class="form-group">
+        <textarea name="gist" rows="20" cols="80" class="form-control" id="editor"></textarea>
+        <script>
+          element = document.getElementById("editor");
+          CodeMirror.fromTextArea(element, {lineNumbers: true});
+        </script>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create Gist</button>
+        <a href="/list/" class="btn btn-primary pull-right" role="button">Show all gists</a>
+      </div>
+    </form>
   </div>
-  <br>
-  <div class="form-group">
-    <div><button type="submit" class="btn btn-primary">Create Gist</button></div>
-    <br>
-    <div><a href="/list/">Show all gists</a></div>
-  </div>
-</form>
-<body>
+</body>
