@@ -1,7 +1,43 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="/assets/mystyle.css">
+    <link rel="stylesheet" href="/assets/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/github.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/diff2html.min.css">
+    <script type="text/javascript" src="/javascripts/diff2html.min.js"></script>
+    <script src="/javascripts/highlight.min.js"></script>
+    <script src="/javascripts/scala.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function(e) {
+        var lineDiffExampleClass = document.getElementsByClassName("diff");
+        [].forEach.call(lineDiffExampleClass, function(lineDiff) {
+            var lineDiffExample = lineDiff.innerHTML
+            // parse the diff to json
+            var diffJson = Diff2Html.getJsonFromDiff(lineDiffExample);
+            // collect all the file extensions in the json
+            var allFileLanguages = diffJson.map(function(line) {
+              return line.language;
+            });
 
+           // remove duplicated languages
+           var distinctLanguages = allFileLanguages.filter(function(v, i) {
+               return allFileLanguages.indexOf(v) == i;
+           });
+
+           // pass the languages to the highlightjs plugin
+           hljs.configure({languages: distinctLanguages});
+
+           // generate and inject the diff HTML into the desired place
+           lineDiff.innerHTML = Diff2Html.getPrettyHtml(diffJson, { inputFormat: 'json', showFiles: true, matching: 'lines' });
+        });
+        // collect all the code lines and execute the highlight on them
+        var codeLines = document.getElementsByClassName("d2h-code-line-ctn");
+        [].forEach.call(codeLines, function(line) {
+            hljs.highlightBlock(line);
+        });
+      });
+    </script>
   </head>
 
   <body>
@@ -10,19 +46,18 @@
     </div>
     <h4 id="header">Past Commits - {{.Title}}</h4>
     <div id="wrapper">
-      {{range $element := .CDiffs}}
-      <span><br><b>Committed at {{$element.CommitedOn}}</b></span>
-      <div class="btn-group pull-right">
-        <a href="/show-by-id/{{$.Title}}/{{$element.CommitId}}" class="btn btn-default" role="button"><b>View</b></a>
+      <!-- <a href="/view/{{.Title}}" class="btn btn-primary" role="button">Back</a> -->
+        {{range $element := .CDiffs}}
+        <span><br><b>Committed at {{$element.CommitedOn}}</b></span>
+          <div class="btn-group pull-right">
+            <a href="/show-by-id/{{$.Title}}/{{$element.CommitId}}" class="btn btn-default" role="button"><b>View</b></a>
+            <a href="/raw-by-id/{{$.Title}}/{{$element.CommitId}}" target="_blank" class="btn btn-default" role="button"><b>Raw</b></a>
+            <a href="/download-by-id/{{$.Title}}/{{$element.CommitId}}" class="btn btn-default" role="button"><b>Download</b></a>
+          </div>
+          <div class="diff">{{printf "%s" $element.DiffString}}</div>
+        {{ end }}
         <br>
-        <a href="/raw-by-id/{{$.Title}}/{{$element.CommitId}}" class="btn btn-default" role="button"><b>Raw</b></a>
-        <br>
-        <a href="/download-by-id/{{$.Title}}/{{$element.CommitId}}" class="btn btn-default" role="button"><b>Download</b></a>
-      </div>
-      <div class="diff"><pre>{{printf "%s" $element.DiffString}}<pre></div>
-      {{ end }}
-      <br>
-    <a href="/view/{{.Title}}" class="btn btn-primary" role="button">Back</a>
+      <a href="/view/{{.Title}}" class="btn btn-primary" role="button">Back</a>
     </div>
   </body>
 </html>

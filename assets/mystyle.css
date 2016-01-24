@@ -1,0 +1,20 @@
+#header {
+  padding: 0px 80px 10px 70px;
+  font-size:20px;
+}
+
+#wrapper {
+  width:1300px;
+  padding: 0px 80px 20px 70px;
+}
+
+#left-div {
+  float:left;
+  width:600px;
+  padding: 5px 5px 5px 5px;
+}
+#right-div {
+  float:right;
+  width:500px;
+  padding: 5px 10px 5px 5px;
+}

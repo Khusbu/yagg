@@ -44,6 +44,7 @@ func init() {
   http.HandleFunc("/raw-by-id/", RawByIdHandler)
   http.HandleFunc("/download-by-id/", DownloadByIdHandler)
   http.Handle("/assets/",http.FileServer(http.Dir(".")) )
+  http.Handle("/javascripts/",http.FileServer(http.Dir(".")) )
 }
 
 func main() {
