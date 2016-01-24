@@ -5,7 +5,15 @@
     {{if .List}}
     <ul class="list-group">
       {{ range $element := .List }}
-      <li class="list-group-item"><a href="/show/{{$element}}">{{$element}}</a></li>
+      <li class="list-group-item"><a href="/show/{{$element.FileName}}" style="font-size: 20px;">{{$element.FileName}}</a>
+        <span class="btn-group pull-right">
+          <a href="/raw/{{$element.FileName}}" target="_blank" class="btn btn-default"><b>Raw</b></a>
+          <a href="/download/{{$element.FileName}}" class="btn btn-default"><b>Download</b></a>
+          <a href="/history/{{$element.FileName}}" class="btn btn-default"><b>History</b></a>
+          <a href="/remove/{{$element.FileName}}" class="btn btn-danger"><b>Remove</b></a>
+        </span>
+      <p class="list-group-item-text" style="font-size: 11px;color: #999;">Last updated at {{$element.ModTime}}</p>
+      </li>
     {{ end }}
     </ul>
     {{else}}

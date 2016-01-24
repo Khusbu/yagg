@@ -9,6 +9,14 @@ import(
   "os"
 )
 
+type FileInfo struct {
+  FileName string
+  ModTime string
+}
+type Files struct {
+  List []FileInfo
+}
+
 func (p * Page) Save() error {
   filename := path.Join(*repoPath, p.Title)
   if _, err := os.Stat(filename); err == nil {
@@ -32,14 +40,15 @@ func GetPayload(title string) (*Page, error) {
   return &Page{Title: title, Body: body}, nil
 }
 
-func GetFileList(dir string) ([]string, error) {
+func GetFileList(dir string) ([]FileInfo, error) {
     files, err := ioutil.ReadDir(path.Join(dir, "/")); if err != nil {
       return nil, err
     }
-    var file_list []string
+    var file_list []FileInfo
     for _, f := range files {
       if f.Name() != ".git" && f.Name() != ".gitignore" {
-        file_list = append(file_list, f.Name())
+        file := FileInfo{FileName: f.Name(), ModTime: f.ModTime().UTC().Format("3:04pm on Jan 2, 2006 (MST)")}
+        file_list = append(file_list, file)
       }
     }
     return file_list, nil
@@ -91,9 +100,9 @@ func GetFileAndRawId(path string, apiName string) (string, string){
   return filename, rawId
 }
 
-func CheckFileName(file_list []string, filename string) bool {
+func CheckFileName(file_list []FileInfo, filename string) bool {
   for _, file := range file_list {
-      if file == filename {
+      if file.FileName == filename {
         return false
       }
   }

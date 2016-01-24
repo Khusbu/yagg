@@ -5,10 +5,10 @@
     <div class="panel-heading">
       <div class="container">
       <div style="float:left;"><h4>{{.Title}}</h4></div>
-      <div class="btn-group pull-right" style="float:right;">
-        <a href="/raw/{{.Title}}" target="_blank" class="btn btn-default"><b>Raw</b></a>
-        <a href="/download/{{.Title}}" class="btn btn-default"><b>Download</b></a>
+      <div class="btn-group pull-right">
         {{if not .DisableButtons}}
+          <a href="/raw/{{.Title}}" target="_blank" class="btn btn-default"><b>Raw</b></a>
+          <a href="/download/{{.Title}}" class="btn btn-default"><b>Download</b></a>
           <a href="/history/{{.Title}}" class="btn btn-default"><b>History</b></a>
           <a href="/edit/{{.Title}}" class="btn btn-default"><b>Edit</b></a>
           <a href="/remove/{{.Title}}" class="btn btn-danger"><b>Remove</b></a>

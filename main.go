@@ -23,10 +23,6 @@ type Error struct {
   Message string
 }
 
-type Files struct {
-  List []string
-}
-
 type History struct {
   Title string
   CDiffs []CommitDiff
