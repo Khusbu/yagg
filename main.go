@@ -16,6 +16,7 @@ var (
 type Page struct {
 	Title string
 	Body  []byte
+  DisableButtons bool
 }
 
 type Error struct {

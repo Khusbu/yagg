@@ -126,7 +126,7 @@ func ShowByIdHandler(w http.ResponseWriter, r *http.Request) {
       return
   }
   file := path.Join("view", "show.html")
-  renderTemplate(w, file, &Page{Title: filename, Body: data})
+  renderTemplate(w, file, &Page{Title: filename, Body: data, DisableButtons: true})
 }
 
 func RawByIdHandler(w http.ResponseWriter, r *http.Request) {

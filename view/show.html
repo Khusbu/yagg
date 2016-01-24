@@ -8,9 +8,11 @@
       <div class="btn-group pull-right" style="float:right;">
         <a href="/raw/{{.Title}}" target="_blank" class="btn btn-default"><b>Raw</b></a>
         <a href="/download/{{.Title}}" class="btn btn-default"><b>Download</b></a>
-        <a href="/history/{{.Title}}" class="btn btn-default"><b>History</b></a>
-        <a href="/edit/{{.Title}}" class="btn btn-default"><b>Edit</b></a>
-        <a href="/remove/{{.Title}}" class="btn btn-danger"><b>Remove</b></a>
+        {{if not .DisableButtons}}
+          <a href="/history/{{.Title}}" class="btn btn-default"><b>History</b></a>
+          <a href="/edit/{{.Title}}" class="btn btn-default"><b>Edit</b></a>
+          <a href="/remove/{{.Title}}" class="btn btn-danger"><b>Remove</b></a>
+        {{end}}
       </div>
     </div>
     </div>
