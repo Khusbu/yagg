@@ -1,6 +1,6 @@
 # yagg
 
-Yet-Another-Git-Gist(YAGG) is a light-weight no-database public git-gist. It allows operations like creating, editing, viewing, downloading and showing history of the gists created.
+Yet-Another-Git-Gist is a light-weight no-database public git-gist. It allows operations like creating, editing, viewing, downloading and showing history of the gists created.
 
 ## Installation
 
@@ -94,6 +94,13 @@ yagg  [-b] [-h] [-p] [-r]
 - View all gists:
 
     ![List-gist-image](https://github.com/gophergala2016/yagg/blob/master/images/list_gist.png "list")
+    
+## To-do:
+- Sorting gists in the list page based on options like last updated, etc. Currently gists are sorted in the order of gist-name.
+- Search bar to be included for Gist searching
+- Option of uploading a file as a gist
+- User specific gists
+- User Interface to be enhanced
 
  ## References
 - [Diff2Html](https://github.com/rtfpessoa/diff2html)
